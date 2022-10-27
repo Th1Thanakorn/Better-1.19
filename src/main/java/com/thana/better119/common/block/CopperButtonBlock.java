@@ -27,4 +27,9 @@ public class CopperButtonBlock extends StoneButtonBlock implements IWeatheringCo
     public WeatheringCopper.WeatherState getAge() {
         return this.weatherState;
     }
+
+    @Override
+    public int getPressDuration() {
+        return 20 + this.weatherState.ordinal() * 7;
+    }
 }

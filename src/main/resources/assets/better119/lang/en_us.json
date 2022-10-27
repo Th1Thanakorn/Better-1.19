@@ -1,8 +1,12 @@
 {
   "itemGroup.better119": "Better 1.19",
 
+  "item.better119.copper_golem_spawn_egg": "Copper Golem Spawn Egg",
+
   "block.better119.copper_button": "Copper Button",
   "block.better119.weathered_copper_button": "Weathered Copper Button",
   "block.better119.exposed_copper_button": "Exposed Copper Button",
-  "block.better119.oxidized_copper_button": "Oxidized Copper Button"
+  "block.better119.oxidized_copper_button": "Oxidized Copper Button",
+
+  "entity.better119.copper_golem": "Copper Golem"
 }

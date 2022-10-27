@@ -1,8 +1,11 @@
 package com.thana.better119.common.item;
 
 import com.thana.better119.common.block.BlockInit;
+import com.thana.better119.common.entity.EntityTypeInit;
 import com.thana.better119.core.Better1_19;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -12,6 +15,8 @@ import net.minecraftforge.registries.RegistryObject;
 public class ItemInit {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Better1_19.MODID);
+
+    public static final RegistryObject<Item> COPPER_GOLEM_SPAWN_EGG = ITEMS.register("copper_golem_spawn_egg", () -> new ForgeSpawnEggItem(EntityTypeInit.COPPER_GOLEM::get, 0xCA8536, 0xBD7103, new Item.Properties().tab(Better1_19.TAB)));
 
     // Block Item
     public static final RegistryObject<Item> COPPER_BUTTON = ITEMS.register("copper_button", () -> new BlockItemBase(BlockInit.COPPER_BUTTON.get()));

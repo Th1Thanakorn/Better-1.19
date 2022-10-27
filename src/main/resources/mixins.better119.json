@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8.3",
+  "package": "com.thana.better119.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "better119-refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

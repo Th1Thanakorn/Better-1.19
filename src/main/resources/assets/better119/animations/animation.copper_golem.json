@@ -1,0 +1,148 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.copper_golem.walk": {
+			"loop": true,
+			"animation_length": 1.68,
+			"bones": {
+				"leftarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.36": {
+							"vector": [-20, 0, 0]
+						},
+						"0.76": {
+							"vector": [-12.5, 0, 0]
+						},
+						"1.24": {
+							"vector": [7.5, 0, 0]
+						},
+						"1.68": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.36": {
+							"vector": [0, 0, 0]
+						},
+						"0.76": {
+							"vector": [0, 0, 0]
+						},
+						"1.24": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"rightarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.36": {
+							"vector": [12.5, 0, 0]
+						},
+						"0.76": {
+							"vector": [2.5, 0, 0]
+						},
+						"1.24": {
+							"vector": [-10, 0, 0]
+						},
+						"1.68": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.36": {
+							"vector": [0, 0, 0]
+						},
+						"0.76": {
+							"vector": [0, 0, 0]
+						},
+						"1.24": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"leftleg": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.36": {
+							"vector": [8.29, 0, 0]
+						},
+						"0.76": {
+							"vector": [17.5, 0, 0]
+						},
+						"1.24": {
+							"vector": [-16.45, 0, 0]
+						},
+						"1.68": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.36": {
+							"vector": [0, 0.4, 0]
+						},
+						"1.68": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"rightleg": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.36": {
+							"vector": [-15, 0, 0]
+						},
+						"0.76": {
+							"vector": [-15, 0, 0]
+						},
+						"1.24": {
+							"vector": [15, 0, 0]
+						},
+						"1.68": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.36": {
+							"vector": [0, 0.4, 0]
+						},
+						"1.68": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.copper_golem.idle": {
+			"animation_length": 7.72,
+			"bones": {
+				"rod": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time*150)*25", 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}
