@@ -33,7 +33,7 @@ public class FindButtonGoal extends Goal {
 
     private void searchForButtons() {
         List<BlockPos> buttons = this.getButtons();
-        if (buttons.size() != 0) {
+        if (!buttons.isEmpty()) {
             BlockPos pos = this.getRandomNavigableBlockPos(buttons);
             if (pos != null) {
                 this.mob.setTargetPos(pos);
@@ -44,7 +44,7 @@ public class FindButtonGoal extends Goal {
 
     @Nullable
     private BlockPos getRandomNavigableBlockPos(List<BlockPos> buttons) {
-        while(buttons.size() > 0) {
+        while (!buttons.isEmpty()) {
             int index = this.mob.getRandom().nextInt(buttons.size());
             BlockPos pos = buttons.get(index);
             Path path = this.mob.getNavigation().createPath(pos, 1);

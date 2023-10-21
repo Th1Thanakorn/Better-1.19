@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "better119-refmap.json",
   "mixins": [
+    "MixinAxeItem",
+    "MixinHoneycombItem"
   ],
   "client": [
   ],

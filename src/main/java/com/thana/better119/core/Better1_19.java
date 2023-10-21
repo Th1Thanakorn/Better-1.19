@@ -7,17 +7,23 @@ import com.thana.better119.common.entity.renderer.CopperGolemRenderer;
 import com.thana.better119.common.event.CommonEventHandler;
 import com.thana.better119.common.item.ItemInit;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.server.commands.DebugPathCommand;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import software.bernie.geckolib3.GeckoLib;
+import software.bernie.geckolib3.network.GeckoLibNetwork;
+import software.bernie.geckolib3.resource.ResourceListener;
 
 @Mod(Better1_19.MODID)
 public class Better1_19 {
@@ -33,13 +39,21 @@ public class Better1_19 {
         ItemInit.init();
         EntityTypeInit.init();
 
-        GeckoLib.initialize();
+        // Register GeckoLib
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ResourceListener::registerReloadListener);
+        GeckoLibNetwork.initialize();
+        GeckoLib.hasInitialized = true;
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
     }
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
+    }
+
+    @SubscribeEvent
+    public void registerCommands(RegisterCommandsEvent event) {
+        DebugPathCommand.register(event.getDispatcher());
     }
 
     public void onClientSetup(final FMLClientSetupEvent event) {

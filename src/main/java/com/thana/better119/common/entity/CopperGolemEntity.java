@@ -18,6 +18,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -31,10 +32,12 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
 
@@ -45,7 +48,7 @@ public class CopperGolemEntity extends PathfinderMob implements IAnimatable {
 
     private static final List<Item> AXE = List.of(Items.WOODEN_AXE, Items.STONE_AXE, Items.IRON_AXE, Items.GOLDEN_AXE, Items.DIAMOND_AXE, Items.NETHERITE_AXE);
 
-    private final AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private BlockPos targetPos;
 
     public CopperGolemEntity(EntityType<CopperGolemEntity> type, Level level) {
@@ -61,9 +64,9 @@ public class CopperGolemEntity extends PathfinderMob implements IAnimatable {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 0.55F));
+        this.goalSelector.addGoal(1, new PanicGoal(this, this.getOxidizationState().getWalkSpeed() * 1.215F));
         this.goalSelector.addGoal(2, new TemptGoal(this, 0.5F, Ingredient.of(Items.COPPER_INGOT), false));
-        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.4F));
+        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, this.getOxidizationState().getWalkSpeed()));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new FindButtonGoal(this));
@@ -132,30 +135,22 @@ public class CopperGolemEntity extends PathfinderMob implements IAnimatable {
     private void updateOxidationState() {
         OxidizationState state = this.getOxidizationState();
         if (!this.getIsWaxed() && state != OxidizationState.OXIDIZED) {
-            if (this.tickCount % 393216 == 0) {
+            if (this.random.nextInt(160320) <= 1) {
                 int ordinal = state.ordinal() + 1;
                 this.setOxidizationState(OxidizationState.values()[ordinal]);
             }
-        }
-
-        // Oxidized AI
-        if (state == OxidizationState.OXIDIZED && !this.isNoAi()) {
-            this.setNoAi(true);
-            this.removeFreeWill();
-        }
-        else if (state != OxidizationState.OXIDIZED && this.isNoAi()) {
-            this.setNoAi(false);
-            this.registerGoals();
         }
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.copper_golem.walk", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.copper_golem.walk", ILoopType.EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         }
         else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.copper_golem.idle", true));
+            if (this.getOxidizationState() != OxidizationState.OXIDIZED) {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.copper_golem.idle", ILoopType.EDefaultLoopTypes.LOOP));
+            }
         }
         return PlayState.CONTINUE;
     }
@@ -209,6 +204,20 @@ public class CopperGolemEntity extends PathfinderMob implements IAnimatable {
 
     public void setOxidizationState(OxidizationState state) {
         this.entityData.set(OXIDIZATION_STATE, state.ordinal());
+
+        if (state == OxidizationState.OXIDIZED) {
+            this.setNoAi(true);
+            this.removeFreeWill();
+        }
+        else {
+            this.setNoAi(false);
+            this.registerGoals();
+        }
+
+        AttributeInstance instance = this.getAttribute(Attributes.MOVEMENT_SPEED);
+        if (instance != null) {
+            instance.setBaseValue(state.getWalkSpeed());
+        }
     }
 
     public OxidizationState getOxidizationState() {
@@ -223,7 +232,7 @@ public class CopperGolemEntity extends PathfinderMob implements IAnimatable {
 
     public enum OxidizationState {
         UNAFFECTED(0.4F),
-        EXPOSED(0.315F),
+        EXPOSED(0.275F),
         WEATHERED(0.15F),
         OXIDIZED(0.0F);
 
