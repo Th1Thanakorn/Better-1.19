@@ -181,6 +181,8 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+    annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
+
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19:3.1.40')
 }
 
