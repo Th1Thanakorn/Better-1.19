@@ -4,8 +4,10 @@ import com.mojang.logging.LogUtils;
 import com.thana.better119.common.block.BlockInit;
 import com.thana.better119.common.entity.EntityTypeInit;
 import com.thana.better119.common.entity.renderer.CopperGolemRenderer;
+import com.thana.better119.common.entity.renderer.MoobloomRenderer;
 import com.thana.better119.common.event.CommonEventHandler;
 import com.thana.better119.common.item.ItemInit;
+import net.minecraft.client.renderer.entity.CowRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.server.commands.DebugPathCommand;
 import net.minecraft.world.item.CreativeModeTab;
@@ -58,6 +60,7 @@ public class Better1_19 {
 
     public void onClientSetup(final FMLClientSetupEvent event) {
         EntityRenderers.register(EntityTypeInit.COPPER_GOLEM.get(), CopperGolemRenderer::new);
+        EntityRenderers.register(EntityTypeInit.MOOBLOOM.get(), MoobloomRenderer::new);
     }
 
     public static final CreativeModeTab TAB = new CreativeModeTab("better119") {

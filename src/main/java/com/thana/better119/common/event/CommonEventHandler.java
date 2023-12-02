@@ -2,6 +2,7 @@ package com.thana.better119.common.event;
 
 import com.thana.better119.common.entity.CopperGolemEntity;
 import com.thana.better119.common.entity.EntityTypeInit;
+import com.thana.better119.common.entity.MoobloomEntity;
 import com.thana.better119.core.Better1_19;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +22,7 @@ public class CommonEventHandler {
     @SubscribeEvent
     public static void mobAttributes(EntityAttributeCreationEvent event) {
         event.put(EntityTypeInit.COPPER_GOLEM.get(), CopperGolemEntity.createAttributes().build());
+        event.put(EntityTypeInit.MOOBLOOM.get(), MoobloomEntity.createAttributes().build());
     }
 
     @SubscribeEvent

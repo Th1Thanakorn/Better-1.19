@@ -14,6 +14,7 @@ public class EntityTypeInit {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Better1_19.MODID);
 
     public static final RegistryObject<EntityType<CopperGolemEntity>> COPPER_GOLEM = ENTITIES.register("copper_golem", () -> EntityType.Builder.of(CopperGolemEntity::new, MobCategory.MISC).sized(0.75F, 1.2F).build(new ResourceLocation(Better1_19.MODID, "copper_golem").toString()));
+    public static final RegistryObject<EntityType<MoobloomEntity>> MOOBLOOM = ENTITIES.register("moobloom", () -> EntityType.Builder.of(MoobloomEntity::new, MobCategory.CREATURE).sized(0.9F, 1.4F).build(new ResourceLocation(Better1_19.MODID, "moobloom").toString()));
 
     public static void init() {
         ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());

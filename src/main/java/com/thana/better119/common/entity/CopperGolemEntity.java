@@ -12,16 +12,19 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -126,6 +129,14 @@ public class CopperGolemEntity extends PathfinderMob implements IAnimatable {
             return InteractionResult.sidedSuccess(this.level.isClientSide);
         }
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public void thunderHit(ServerLevel level, LightningBolt bolt) {
+        float distance = bolt.distanceTo(this);
+        float weight = Mth.clamp((4 - distance) * 0.955F, 0, 3);
+        OxidizationState state = OxidizationState.values()[(int) weight];
+        this.setOxidizationState(state);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
